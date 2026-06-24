@@ -20,10 +20,10 @@ GitHub Actions does the build work:
 
 Required GitHub repository secrets:
 
-- `COOLIFY_DEPLOY_WEBHOOK`: Coolify deploy webhook URL for the Docker Image resource.
-- `COOLIFY_DEPLOY_WEBHOOK_SECRET`: Coolify deploy webhook secret or API token. The workflow sends it as `Authorization: Bearer <secret>`.
+- `COOLIFY_DEPLOY_URL`: Coolify API deploy URL in the format `https://<coolify-domain>/api/v1/deploy?uuid=<resource-uuid>`.
+- `COOLIFY_API_TOKEN`: Coolify API token with `deploy` permission. The workflow sends it as `Authorization: Bearer <token>`.
 
-Do not create a GitHub repository webhook with a Payload URL for this deployment flow. This project uses GitHub Actions to build the image, then calls the Coolify deploy webhook after the image is already published.
+Do not use the Coolify GitHub manual webhook URL for this deployment flow. URLs like `/source/github/events/manual` expect GitHub webhook headers and payloads and will respond with `Nothing to do. Event '' is not supported.` from a plain `curl`. This project uses GitHub Actions to build the image, then calls the Coolify API deploy endpoint after the image is already published.
 
 The workflow publishes:
 
@@ -44,8 +44,8 @@ Recommended settings:
 - Force HTTPS: enabled
 - Environment Variables: none for the first version
 - Auto Deploy from Git repository: not needed for this resource
-- Deploy webhook: create/copy the Coolify deploy webhook URL and save it as GitHub secret `COOLIFY_DEPLOY_WEBHOOK`
-- Deploy webhook secret: copy the matching Coolify secret/token and save it as GitHub secret `COOLIFY_DEPLOY_WEBHOOK_SECRET`
+- API deploy URL: save `https://<coolify-domain>/api/v1/deploy?uuid=<resource-uuid>` as GitHub secret `COOLIFY_DEPLOY_URL`
+- API token: create a Coolify API token with `deploy` permission and save it as GitHub secret `COOLIFY_API_TOKEN`
 
 If the GHCR package is private, add registry credentials in Coolify so the server can pull the image. Use a GitHub token with package read permission. If the GHCR package is public, registry credentials are not needed.
 

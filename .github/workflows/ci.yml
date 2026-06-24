@@ -71,19 +71,36 @@ jobs:
       - name: Trigger Coolify image redeploy
         if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
         env:
-          COOLIFY_DEPLOY_WEBHOOK: ${{ secrets.COOLIFY_DEPLOY_WEBHOOK }}
-          COOLIFY_DEPLOY_WEBHOOK_SECRET: ${{ secrets.COOLIFY_DEPLOY_WEBHOOK_SECRET }}
+          COOLIFY_DEPLOY_URL: ${{ secrets.COOLIFY_DEPLOY_URL || secrets.COOLIFY_DEPLOY_WEBHOOK }}
+          COOLIFY_API_TOKEN: ${{ secrets.COOLIFY_API_TOKEN || secrets.COOLIFY_DEPLOY_WEBHOOK_SECRET }}
         run: |
-          if [ -z "$COOLIFY_DEPLOY_WEBHOOK" ]; then
-            echo "COOLIFY_DEPLOY_WEBHOOK secret is not set."
+          if [ -z "$COOLIFY_DEPLOY_URL" ]; then
+            echo "COOLIFY_DEPLOY_URL secret is not set."
             exit 1
           fi
-          if [ -z "$COOLIFY_DEPLOY_WEBHOOK_SECRET" ]; then
-            echo "COOLIFY_DEPLOY_WEBHOOK_SECRET secret is not set."
+          if [ -z "$COOLIFY_API_TOKEN" ]; then
+            echo "COOLIFY_API_TOKEN secret is not set."
+            exit 1
+          fi
+          if [[ "$COOLIFY_DEPLOY_URL" == *"/source/"*"/events"* ]]; then
+            echo "Manual Git webhook URLs cannot trigger pre-built image deployments."
+            echo "Set COOLIFY_DEPLOY_URL to https://<coolify-domain>/api/v1/deploy?uuid=<resource-uuid>."
+            exit 1
+          fi
+          if [[ "$COOLIFY_DEPLOY_URL" != *"/api/v1/deploy?uuid="* ]]; then
+            echo "COOLIFY_DEPLOY_URL should be the Coolify API deploy endpoint."
+            echo "Expected format: https://<coolify-domain>/api/v1/deploy?uuid=<resource-uuid>."
             exit 1
           fi
 
-          curl --fail --silent --show-error \
+          response="$(curl --fail --silent --show-error \
             --request POST \
-            --header "Authorization: Bearer $COOLIFY_DEPLOY_WEBHOOK_SECRET" \
-            "$COOLIFY_DEPLOY_WEBHOOK"
+            --header "Authorization: Bearer $COOLIFY_API_TOKEN" \
+            "$COOLIFY_DEPLOY_URL")"
+
+          echo "$response"
+
+          if ! echo "$response" | grep -Eq '"deployments"|"deployment_uuid"'; then
+            echo "Coolify did not queue a deployment."
+            exit 1
+          fi
