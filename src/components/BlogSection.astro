@@ -1,0 +1,71 @@
+---
+import { links } from '../data/links';
+import type { Locale } from '../i18n/config';
+import { getDictionary } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getDictionary(locale);
+const blogLinks = [
+  { label: t.blogTopics.blog, href: links.blog },
+  { label: t.blogTopics.ai, href: links.blogAi },
+  { label: t.blogTopics.gameDev, href: links.blogGameDev },
+  { label: t.blogTopics.japanese, href: links.blogJapanese },
+  { label: t.blogTopics.frontend, href: links.blogFrontend }
+];
+---
+
+<div class="blog-links">
+  {blogLinks.map((item) => (
+    <a class="blog-link" href={item.href}>
+      <span>{item.label}</span>
+      <span aria-hidden="true">↗</span>
+    </a>
+  ))}
+</div>
+
+<style>
+  .blog-links {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .blog-link {
+    display: flex;
+    min-height: 96px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    border-radius: 8px;
+    padding: 16px;
+    background: rgba(16, 24, 39, 0.74);
+    color: #f8fafc;
+    font-weight: 800;
+  }
+
+  .blog-link span:last-child {
+    color: #22d3ee;
+  }
+
+  .blog-link:hover {
+    border-color: rgba(34, 211, 238, 0.4);
+    background: rgba(34, 211, 238, 0.08);
+  }
+
+  @media (max-width: 900px) {
+    .blog-links {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 560px) {
+    .blog-links {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

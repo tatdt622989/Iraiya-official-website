@@ -1,0 +1,72 @@
+---
+import { links } from '../data/links';
+import { routeForLocale, type Locale } from '../i18n/config';
+import { getDictionary } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getDictionary(locale);
+---
+
+<footer class="site-footer">
+  <div class="site-shell footer-inner">
+    <div>
+      <a class="footer-brand" href={routeForLocale(locale, '/')}>Iraiya</a>
+      <p>{t.footer.operatedBy}</p>
+    </div>
+    <div class="footer-links">
+      <a href={links.personalSite}>{t.footer.personalSite}: 6yuwei.com</a>
+      <a href={links.blog}>blog.6yuwei.com</a>
+      <a href={`mailto:${links.contactEmail}`}>{links.contactEmail}</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid rgba(148, 163, 184, 0.14);
+    padding: 32px 0;
+    color: #94a3b8;
+  }
+
+  .footer-inner {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .footer-brand {
+    color: #f8fafc;
+    font-weight: 900;
+  }
+
+  .site-footer p {
+    margin: 8px 0 0;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 12px;
+    font-size: 0.92rem;
+  }
+
+  .footer-links a:hover {
+    color: #f8fafc;
+  }
+
+  @media (max-width: 720px) {
+    .footer-inner {
+      flex-direction: column;
+    }
+
+    .footer-links {
+      justify-content: flex-start;
+    }
+  }
+</style>

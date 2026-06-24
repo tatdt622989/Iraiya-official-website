@@ -1,0 +1,51 @@
+---
+import { localeLabels, LOCALES, routeForLocale, type Locale } from '../i18n/config';
+
+interface Props {
+  locale: Locale;
+  path: string;
+}
+
+const { locale, path } = Astro.props;
+---
+
+<div class="language-switcher" aria-label="Language">
+  {LOCALES.map((availableLocale) => (
+    <a
+      class:list={['language-link', availableLocale === locale && 'is-active']}
+      href={routeForLocale(availableLocale, path)}
+      aria-current={availableLocale === locale ? 'page' : undefined}
+    >
+      {localeLabels[availableLocale]}
+    </a>
+  ))}
+</div>
+
+<style>
+  .language-switcher {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .language-link {
+    display: inline-flex;
+    min-width: 38px;
+    min-height: 34px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    border-radius: 8px;
+    padding: 6px 9px;
+    color: #cbd5e1;
+    font-size: 0.78rem;
+    font-weight: 800;
+  }
+
+  .language-link:hover,
+  .language-link.is-active {
+    border-color: rgba(34, 211, 238, 0.42);
+    color: #f8fafc;
+    background: rgba(34, 211, 238, 0.1);
+  }
+</style>

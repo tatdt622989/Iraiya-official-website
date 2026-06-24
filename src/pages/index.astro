@@ -1,0 +1,19 @@
+---
+import { DEFAULT_LOCALE, routeForLocale } from '../i18n/config';
+
+const target = routeForLocale(DEFAULT_LOCALE, '/');
+---
+
+<!doctype html>
+<html lang="zh-Hant-TW">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="refresh" content={`0;url=${target}`} />
+    <link rel="canonical" href={target} />
+    <title>Iraiya</title>
+  </head>
+  <body>
+    <a href={target}>Iraiya</a>
+  </body>
+</html>

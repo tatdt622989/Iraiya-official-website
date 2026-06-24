@@ -1,0 +1,118 @@
+---
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import { routeForLocale, type Locale } from '../i18n/config';
+import { getDictionary } from '../i18n';
+
+interface Props {
+  locale: Locale;
+  path: string;
+}
+
+const { locale, path } = Astro.props;
+const t = getDictionary(locale);
+const navItems = [
+  { href: '/apps', label: t.nav.apps },
+  { href: '/labs', label: t.nav.labs },
+  { href: '/blog', label: t.nav.blog },
+  { href: '/services', label: t.nav.services },
+  { href: '/contact', label: t.nav.contact }
+];
+---
+
+<header class="site-header">
+  <div class="site-shell header-inner">
+    <a class="brand" href={routeForLocale(locale, '/')}>
+      <span class="brand-mark" aria-hidden="true">I</span>
+      <span>{t.brand.name}</span>
+    </a>
+    <nav class="nav-links" aria-label="Main navigation">
+      {navItems.map((item) => (
+        <a
+          href={routeForLocale(locale, item.href)}
+          aria-current={path === item.href ? 'page' : undefined}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+    <LanguageSwitcher locale={locale} path={path} />
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+    background: rgba(7, 17, 31, 0.82);
+    backdrop-filter: blur(18px);
+  }
+
+  .header-inner {
+    display: grid;
+    min-height: 72px;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 900;
+  }
+
+  .brand-mark {
+    display: inline-flex;
+    width: 34px;
+    height: 34px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(34, 211, 238, 0.42);
+    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(34, 211, 238, 0.22), rgba(244, 63, 94, 0.16));
+    color: #f8fafc;
+  }
+
+  .nav-links {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .nav-links a {
+    min-height: 38px;
+    border-radius: 8px;
+    padding: 9px 11px;
+    color: #cbd5e1;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  .nav-links a:hover,
+  .nav-links a[aria-current='page'] {
+    background: rgba(248, 250, 252, 0.07);
+    color: #f8fafc;
+  }
+
+  @media (max-width: 820px) {
+    .header-inner {
+      grid-template-columns: 1fr auto;
+      padding: 12px 0;
+    }
+
+    .nav-links {
+      grid-column: 1 / -1;
+      order: 3;
+      justify-content: flex-start;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+
+    .nav-links a {
+      white-space: nowrap;
+    }
+  }
+</style>

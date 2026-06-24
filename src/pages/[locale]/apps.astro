@@ -1,0 +1,34 @@
+---
+import ProductCard from '../../components/ProductCard.astro';
+import { products } from '../../data/products';
+import { getDictionary } from '../../i18n';
+import { isLocale, LOCALES, type Locale } from '../../i18n/config';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export function getStaticPaths() {
+  return LOCALES.map((locale) => ({ params: { locale } }));
+}
+
+const localeParam = Astro.params.locale;
+if (!isLocale(localeParam)) {
+  throw new Error(`Unsupported locale: ${localeParam}`);
+}
+const locale: Locale = localeParam;
+const t = getDictionary(locale);
+---
+
+<BaseLayout locale={locale} path="/apps" title={t.pages.apps.metaTitle} description={t.pages.apps.metaDescription}>
+  <section class="page-hero">
+    <div class="site-shell">
+      <h1>{t.pages.apps.title}</h1>
+      <p>{t.pages.apps.description}</p>
+    </div>
+  </section>
+  <section class="section-tight">
+    <div class="site-shell">
+      <div class="grid">
+        {products.map((product) => <ProductCard product={product} locale={locale} detailed />)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

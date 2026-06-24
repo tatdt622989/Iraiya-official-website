@@ -1,0 +1,88 @@
+---
+import { links } from '../../data/links';
+import { getDictionary } from '../../i18n';
+import { isLocale, LOCALES, type Locale } from '../../i18n/config';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export function getStaticPaths() {
+  return LOCALES.map((locale) => ({ params: { locale } }));
+}
+
+const localeParam = Astro.params.locale;
+if (!isLocale(localeParam)) {
+  throw new Error(`Unsupported locale: ${localeParam}`);
+}
+const locale: Locale = localeParam;
+const t = getDictionary(locale);
+const contactItems = [
+  { label: t.contact.email, value: links.contactEmail, href: `mailto:${links.contactEmail}` },
+  { label: t.contact.futureEmail, value: `[TODO: ${links.futureBrandEmail}]`, href: null },
+  { label: t.contact.personalSite, value: '6yuwei.com', href: links.personalSite },
+  { label: t.contact.blog, value: 'blog.6yuwei.com', href: links.blog }
+];
+---
+
+<BaseLayout locale={locale} path="/contact" title={t.pages.contact.metaTitle} description={t.pages.contact.metaDescription}>
+  <section class="page-hero">
+    <div class="site-shell">
+      <h1>{t.pages.contact.title}</h1>
+      <p>{t.pages.contact.description}</p>
+    </div>
+  </section>
+  <section class="section-tight">
+    <div class="site-shell contact-grid">
+      {contactItems.map((item) => (
+        <article class="contact-card">
+          <span>{item.label}</span>
+          {item.href ? <a href={item.href}>{item.value}</a> : <strong>{item.value}</strong>}
+        </article>
+      ))}
+    </div>
+    <div class="site-shell">
+      <p class="contact-note">{t.contact.note}</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .contact-card {
+    display: grid;
+    gap: 10px;
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    border-radius: 8px;
+    padding: 20px;
+    background: rgba(16, 24, 39, 0.78);
+  }
+
+  .contact-card span {
+    color: #94a3b8;
+    font-size: 0.84rem;
+    font-weight: 800;
+  }
+
+  .contact-card a,
+  .contact-card strong {
+    color: #f8fafc;
+    font-size: 1.1rem;
+    overflow-wrap: anywhere;
+  }
+
+  .contact-note {
+    max-width: 760px;
+    margin: 18px 0 0;
+    color: #cbd5e1;
+    line-height: 1.7;
+  }
+
+  @media (max-width: 640px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,196 @@
+---
+import { products } from '../data/products';
+import { routeForLocale, type Locale } from '../i18n/config';
+import { getDictionary } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getDictionary(locale);
+const floatCards = products.map((product) => product.names[locale]);
+---
+
+<section class="hero">
+  <div class="site-shell hero-grid">
+    <div class="hero-copy">
+      <h1>{t.hero.title}</h1>
+      <p class="hero-headline">{t.hero.headline}</p>
+      <p class="hero-subtitle">{t.hero.subtitle}</p>
+      <div class="button-row">
+        <a class="button button-primary" href={routeForLocale(locale, '/apps')}>{t.common.viewApps}</a>
+        <a class="button" href={routeForLocale(locale, '/labs')}>{t.common.exploreLabs}</a>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hero-wave"></div>
+      {floatCards.map((label, index) => (
+        <div class={`float-card float-card-${index + 1}`}>
+          <span>{label}</span>
+        </div>
+      ))}
+      <div class="float-card float-card-5">
+        <span>Iraiya Labs</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding: clamp(46px, 7vh, 64px) 0 clamp(52px, 7vh, 70px);
+  }
+
+  .hero-grid {
+    display: grid;
+    min-height: min(620px, calc(100svh - 190px));
+    grid-template-columns: minmax(0, 1.04fr) minmax(330px, 0.96fr);
+    align-items: center;
+    gap: 42px;
+  }
+
+  .hero-copy {
+    max-width: 760px;
+  }
+
+  .hero-copy h1 {
+    margin: 0;
+    font-size: clamp(3.2rem, 9vw, 7.2rem);
+    line-height: 0.94;
+  }
+
+  .hero-headline {
+    margin: 24px 0 0;
+    color: #f8fafc;
+    font-size: clamp(1.35rem, 3vw, 2.2rem);
+    font-weight: 800;
+    line-height: 1.18;
+  }
+
+  .hero-subtitle {
+    max-width: 680px;
+    margin: 18px 0 30px;
+    color: #a8b4c4;
+    font-size: clamp(1rem, 2vw, 1.18rem);
+    line-height: 1.78;
+  }
+
+  .hero-visual {
+    position: relative;
+    min-height: 520px;
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    border-radius: 8px;
+    overflow: hidden;
+    background:
+      linear-gradient(180deg, rgba(20, 32, 51, 0.84), rgba(7, 17, 31, 0.72)),
+      repeating-linear-gradient(0deg, rgba(34, 211, 238, 0.08) 0 1px, transparent 1px 22px),
+      repeating-linear-gradient(90deg, rgba(251, 191, 36, 0.05) 0 1px, transparent 1px 22px);
+    box-shadow: 0 22px 70px rgba(0, 0, 0, 0.36);
+  }
+
+  .hero-wave {
+    position: absolute;
+    right: -8%;
+    bottom: 64px;
+    width: 116%;
+    height: 150px;
+    border: 2px solid rgba(34, 211, 238, 0.2);
+    border-right: 0;
+    border-left: 0;
+    transform: skewY(-7deg);
+  }
+
+  .float-card {
+    position: absolute;
+    display: flex;
+    width: min(74%, 320px);
+    min-height: 78px;
+    align-items: center;
+    border: 1px solid rgba(248, 250, 252, 0.12);
+    border-radius: 8px;
+    padding: 16px;
+    background: rgba(16, 24, 39, 0.82);
+    color: #f8fafc;
+    font-weight: 900;
+  }
+
+  .float-card::before {
+    display: inline-flex;
+    width: 18px;
+    height: 18px;
+    margin-right: 12px;
+    border: 1px solid currentColor;
+    border-radius: 4px;
+    content: '';
+  }
+
+  .float-card-1 {
+    top: 42px;
+    left: 32px;
+    color: #a7f3d0;
+  }
+
+  .float-card-2 {
+    top: 142px;
+    right: 28px;
+    color: #a5f3fc;
+  }
+
+  .float-card-3 {
+    top: 252px;
+    left: 58px;
+    color: #fde68a;
+  }
+
+  .float-card-4 {
+    right: 44px;
+    bottom: 72px;
+    color: #ddd6fe;
+  }
+
+  .float-card-5 {
+    bottom: 26px;
+    left: 34px;
+    width: min(58%, 250px);
+    color: #fecdd3;
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-visual {
+      min-height: 420px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .hero {
+      padding: 34px 0 40px;
+    }
+
+    .hero-grid {
+      gap: 26px;
+      min-height: auto;
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(2.8rem, 13vw, 3.4rem);
+    }
+
+    .hero-headline {
+      margin-top: 18px;
+    }
+
+    .hero-subtitle {
+      margin-bottom: 22px;
+      line-height: 1.62;
+    }
+
+    .hero-visual {
+      display: none;
+    }
+  }
+</style>

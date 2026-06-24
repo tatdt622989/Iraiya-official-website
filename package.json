@@ -1,0 +1,29 @@
+{
+  "name": "iraiya-official-website",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.26.2",
+  "engines": {
+    "node": ">=20.16.0"
+  },
+  "scripts": {
+    "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
+    "build": "ASTRO_TELEMETRY_DISABLED=1 astro check && ASTRO_TELEMETRY_DISABLED=1 astro build",
+    "check": "ASTRO_TELEMETRY_DISABLED=1 astro check",
+    "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/tailwind": "^6.0.2",
+    "astro": "^5.10.1",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.9.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "vitest": "^3.2.4"
+  }
+}

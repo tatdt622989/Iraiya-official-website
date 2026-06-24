@@ -1,0 +1,182 @@
+---
+import type { Product } from '../data/products';
+import type { Locale } from '../i18n/config';
+import { getDictionary } from '../i18n';
+
+interface Props {
+  product: Product;
+  locale: Locale;
+  detailed?: boolean;
+}
+
+const { product, locale, detailed = false } = Astro.props;
+const t = getDictionary(locale);
+const statusClassByStatus = {
+  published: 'badge-green',
+  'live-web-game': 'badge-cyan',
+  'coming-soon': 'badge-gold',
+  'in-development': 'badge-violet'
+};
+---
+
+<article class:list={['product-card', `product-card-${product.accent}`, detailed && 'is-detailed']}>
+  <div class="product-visual" aria-hidden="true">
+    <span>{product.imagePlaceholder}</span>
+  </div>
+  <div class="product-body">
+    <div class="product-meta">
+      <span class:list={['badge', statusClassByStatus[product.status]]}>{t.status[product.status]}</span>
+      <span>{product.platform[locale]}</span>
+    </div>
+    <h3>{product.names[locale]}</h3>
+    <p>{product.descriptions[locale]}</p>
+    <dl>
+      <div>
+        <dt>{t.common.type}</dt>
+        <dd>{product.type[locale]}</dd>
+      </div>
+      <div>
+        <dt>{t.common.platform}</dt>
+        <dd>{product.platform[locale]}</dd>
+      </div>
+    </dl>
+    <ul class="tag-list" aria-label={t.common.topics}>
+      {product.tags[locale].map((tag) => <li>{tag}</li>)}
+    </ul>
+    {product.notes[locale] && <p class="note">{product.notes[locale]}</p>}
+    <div class="product-action">
+      {product.url && product.ctaKind === 'link' ? (
+        <a class="button" href={product.url}>{product.ctaLabel[locale]}</a>
+      ) : (
+        <span class="button button-disabled" aria-disabled="true">{product.ctaLabel[locale]}</span>
+      )}
+    </div>
+  </div>
+</article>
+
+<style>
+  .product-card {
+    display: grid;
+    min-height: 100%;
+    grid-template-rows: 150px 1fr;
+    overflow: hidden;
+    border: 1px solid rgba(148, 163, 184, 0.17);
+    border-radius: 8px;
+    background: rgba(16, 24, 39, 0.84);
+    box-shadow: 0 22px 70px rgba(0, 0, 0, 0.24);
+  }
+
+  .product-card.is-detailed {
+    grid-template-columns: minmax(220px, 0.42fr) 1fr;
+    grid-template-rows: auto;
+  }
+
+  .product-visual {
+    display: grid;
+    place-items: center;
+    background:
+      repeating-linear-gradient(0deg, rgba(248, 250, 252, 0.06) 0 1px, transparent 1px 18px),
+      repeating-linear-gradient(90deg, rgba(248, 250, 252, 0.04) 0 1px, transparent 1px 18px),
+      linear-gradient(135deg, rgba(34, 211, 238, 0.1), rgba(244, 63, 94, 0.08));
+  }
+
+  .product-visual span {
+    display: grid;
+    width: 78px;
+    height: 78px;
+    place-items: center;
+    border: 1px solid currentColor;
+    border-radius: 8px;
+    color: #f8fafc;
+    font-size: 1.45rem;
+    font-weight: 900;
+  }
+
+  .product-card-green .product-visual span {
+    color: #a7f3d0;
+  }
+
+  .product-card-cyan .product-visual span {
+    color: #a5f3fc;
+  }
+
+  .product-card-gold .product-visual span {
+    color: #fde68a;
+  }
+
+  .product-card-violet .product-visual span {
+    color: #ddd6fe;
+  }
+
+  .product-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 22px;
+  }
+
+  .product-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    color: #94a3b8;
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: clamp(1.35rem, 2.5vw, 1.9rem);
+    line-height: 1.15;
+  }
+
+  p {
+    margin: 0;
+    color: #a8b4c4;
+    line-height: 1.7;
+  }
+
+  dl {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin: 0;
+  }
+
+  dt {
+    margin-bottom: 3px;
+    color: #64748b;
+    font-size: 0.74rem;
+    font-weight: 800;
+  }
+
+  dd {
+    margin: 0;
+    color: #e2e8f0;
+    font-size: 0.92rem;
+    font-weight: 700;
+  }
+
+  .note {
+    border-left: 2px solid rgba(251, 191, 36, 0.45);
+    padding-left: 10px;
+    color: #cbd5e1;
+    font-size: 0.86rem;
+  }
+
+  .product-action {
+    margin-top: auto;
+  }
+
+  @media (max-width: 760px) {
+    .product-card.is-detailed {
+      grid-template-columns: 1fr;
+      grid-template-rows: 150px 1fr;
+    }
+
+    dl {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

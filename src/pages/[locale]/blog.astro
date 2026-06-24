@@ -1,0 +1,31 @@
+---
+import BlogSection from '../../components/BlogSection.astro';
+import { getDictionary } from '../../i18n';
+import { isLocale, LOCALES, type Locale } from '../../i18n/config';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export function getStaticPaths() {
+  return LOCALES.map((locale) => ({ params: { locale } }));
+}
+
+const localeParam = Astro.params.locale;
+if (!isLocale(localeParam)) {
+  throw new Error(`Unsupported locale: ${localeParam}`);
+}
+const locale: Locale = localeParam;
+const t = getDictionary(locale);
+---
+
+<BaseLayout locale={locale} path="/blog" title={t.pages.blog.metaTitle} description={t.pages.blog.metaDescription}>
+  <section class="page-hero">
+    <div class="site-shell">
+      <h1>{t.pages.blog.title}</h1>
+      <p>{t.pages.blog.description}</p>
+    </div>
+  </section>
+  <section class="section-tight">
+    <div class="site-shell">
+      <BlogSection locale={locale} />
+    </div>
+  </section>
+</BaseLayout>
