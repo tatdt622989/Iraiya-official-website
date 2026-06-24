@@ -19,7 +19,7 @@ export interface Product {
   ctaKind: CtaKind;
   ctaLabel: Localized<string>;
   tags: Localized<string[]>;
-  imagePlaceholder: string;
+  image: string;
   accent: 'green' | 'cyan' | 'gold' | 'violet';
   isFeatured: boolean;
   sortOrder: number;
@@ -42,7 +42,7 @@ const productItems: Product[] = [
       ja: 'JLPT N5-N1 向けの日本語単語学習アプリ。四択クイズ、毎日チャレンジ、間違いノート、学習統計、毎日リマインダー、オフライン記録に対応。'
     },
     type: {
-      'zh-TW': 'Japanese Vocabulary Learning App',
+      'zh-TW': '日語單字學習 App',
       en: 'Japanese Vocabulary Learning App',
       ja: '日本語単語学習アプリ'
     },
@@ -63,7 +63,7 @@ const productItems: Product[] = [
       en: ['JLPT N5-N1', 'Quick quizzes', 'Error log', 'Daily challenge'],
       ja: ['JLPT N5-N1', '四択クイズ', '間違いノート', '毎日チャレンジ']
     },
-    imagePlaceholder: 'NT',
+    image: '/assets/product-nihongo-tango.png',
     accent: 'green',
     isFeatured: true,
     sortOrder: 1,
@@ -88,7 +88,7 @@ const productItems: Product[] = [
       ja: 'スマホ向けのピクセルブロック崩しPWA。コイン収集、ランチャースキンの解放、スコアカード共有に対応。'
     },
     type: {
-      'zh-TW': 'Pixel Brick Breaker PWA',
+      'zh-TW': '像素打磚塊 PWA',
       en: 'Pixel Brick Breaker PWA',
       ja: 'ピクセルブロック崩しPWA'
     },
@@ -100,16 +100,16 @@ const productItems: Product[] = [
     url: links.brickGame,
     ctaKind: 'link',
     ctaLabel: {
-      'zh-TW': 'Play Web Game',
+      'zh-TW': '開始遊玩',
       en: 'Play Web Game',
-      ja: 'Play Web Game'
+      ja: 'ゲームを遊ぶ'
     },
     tags: {
-      'zh-TW': ['Pixel game', 'PWA', 'Mobile-first', 'Score card'],
+      'zh-TW': ['像素遊戲', 'PWA', '手機優先', '分數卡'],
       en: ['Pixel game', 'PWA', 'Mobile-first', 'Score card'],
-      ja: ['Pixel game', 'PWA', 'Mobile-first', 'Score card']
+      ja: ['ピクセルゲーム', 'PWA', 'スマホ優先', 'スコアカード']
     },
-    imagePlaceholder: 'BR',
+    image: '/assets/product-grassland-brick.png',
     accent: 'cyan',
     isFeatured: true,
     sortOrder: 2,
@@ -134,28 +134,28 @@ const productItems: Product[] = [
       ja: '釣り、抽選、コレクションを組み合わせたモバイル向けカジュアルゲーム。大漁祭をテーマに、魚を釣って報酬やコレクションを楽しめます。'
     },
     type: {
-      'zh-TW': 'Fishing Lottery Game',
+      'zh-TW': '釣魚抽獎遊戲',
       en: 'Fishing Lottery Game',
       ja: '釣り抽選ゲーム'
     },
     platform: {
-      'zh-TW': 'Coming soon',
+      'zh-TW': '即將推出',
       en: 'Coming soon',
-      ja: 'Coming soon'
+      ja: '近日公開'
     },
     url: null,
     ctaKind: 'disabled',
     ctaLabel: {
-      'zh-TW': 'Coming Soon',
+      'zh-TW': '即將推出',
       en: 'Coming Soon',
-      ja: 'Coming Soon'
+      ja: '近日公開'
     },
     tags: {
-      'zh-TW': ['Fishing', 'Lottery rewards', 'Collection', 'Mobile casual'],
+      'zh-TW': ['釣魚', '抽獎獎勵', '收集', '手機休閒'],
       en: ['Fishing', 'Lottery rewards', 'Collection', 'Mobile casual'],
-      ja: ['Fishing', 'Lottery rewards', 'Collection', 'Mobile casual']
+      ja: ['釣り', '抽選報酬', 'コレクション', 'スマホカジュアル']
     },
-    imagePlaceholder: 'GF',
+    image: '/assets/product-fishing-festival.png',
     accent: 'gold',
     isFeatured: true,
     sortOrder: 3,
@@ -180,28 +180,28 @@ const productItems: Product[] = [
       ja: '依頼、育成、ターン制バトルを中心とした放置系モバイルRPG。クエスト、ペット育成、クラフト、装備強化、スキル成長などを楽しめます。'
     },
     type: {
-      'zh-TW': 'Idle Mobile RPG',
+      'zh-TW': '放置型手機 RPG',
       en: 'Idle Mobile RPG',
       ja: '放置系モバイルRPG'
     },
     platform: {
-      'zh-TW': 'In development',
+      'zh-TW': '開發中',
       en: 'In development',
-      ja: 'In development'
+      ja: '開発中'
     },
     url: null,
     ctaKind: 'disabled',
     ctaLabel: {
-      'zh-TW': 'In Development',
+      'zh-TW': '開發中',
       en: 'In Development',
-      ja: 'In Development'
+      ja: '開発中'
     },
     tags: {
-      'zh-TW': ['Idle RPG', 'Commissions', 'Pets', 'Crafting'],
+      'zh-TW': ['放置 RPG', '委託', '寵物', '製作'],
       en: ['Idle RPG', 'Commissions', 'Pets', 'Crafting'],
-      ja: ['Idle RPG', 'Commissions', 'Pets', 'Crafting']
+      ja: ['放置RPG', '依頼', 'ペット', 'クラフト']
     },
-    imagePlaceholder: 'PC',
+    image: '/assets/product-pocket-commissions.png',
     accent: 'violet',
     isFeatured: true,
     sortOrder: 4,

@@ -4,16 +4,16 @@ export default {
     display: 'イライヤ Iraiya'
   },
   nav: {
-    apps: 'Apps & Games',
+    apps: 'アプリ・ゲーム',
     labs: 'Labs',
-    blog: 'Blog',
+    blog: 'ノート',
     services: 'Services',
-    contact: 'Contact'
+    contact: 'お問い合わせ'
   },
   common: {
-    viewApps: 'View Apps & Games',
-    exploreLabs: 'Explore Labs',
-    contactIraiya: 'Contact Iraiya',
+    viewApps: '作品を見る',
+    exploreLabs: 'Labsを見る',
+    contactIraiya: 'Iraiya に連絡',
     openLink: '開く',
     learnMore: '詳しく見る',
     unavailable: '未公開',
@@ -26,11 +26,11 @@ export default {
   status: {
     published: 'Google Play 公開中',
     'live-web-game': 'Web Game 公開中',
-    'coming-soon': 'Coming Soon',
-    'in-development': 'In Development',
-    live: 'Live',
-    experimental: 'Experiment',
-    archived: 'Archive'
+    'coming-soon': '近日公開',
+    'in-development': '開発中',
+    live: '公開中',
+    experimental: '実験中',
+    archived: 'アーカイブ'
   },
   hero: {
     title: 'イライヤ Iraiya',
@@ -42,12 +42,12 @@ export default {
     metaTitle: 'Iraiya イライヤ — アプリ、ゲーム、AI支援ツール',
     metaDescription:
       'Iraiya は、日本語学習アプリ、ピクセルブロック崩しゲーム、釣り抽選ゲーム、放置系RPG、AI支援ツール、開発ワークフロー実験をつくるインディーApp Studio です。',
-    featuredTitle: 'Featured Products',
+    featuredTitle: '主なプロダクト',
     featuredDescription: 'Iraiya の公開済み・開発中のアプリ、ゲーム、PWA。',
-    comingTitle: 'Games in Development / Coming Soon',
+    comingTitle: '開発中・近日公開',
     labsTitle: 'Iraiya Labs',
-    labsDescription: 'Small tools and experiments from Iraiya’s product lab.',
-    writingTitle: 'Writing & Build Notes',
+    labsDescription: 'Iraiya のプロダクトラボから生まれた小さなツールと実験。',
+    writingTitle: '開発ノート',
     writingDescription:
       'AIツール、フロントエンド開発、ゲーム開発、日本語学習、プロダクト実験に関するノート。',
     servicesTitle: 'Engineering Services',
@@ -61,9 +61,9 @@ export default {
   },
   pages: {
     apps: {
-      title: 'Apps & Games by Iraiya',
+      title: 'Iraiya のアプリ・ゲーム',
       description: 'Iraiya のアプリ、Web Game、PWA、開発中のモバイルゲーム。',
-      metaTitle: 'Apps & Games by Iraiya',
+      metaTitle: 'Iraiya のアプリ・ゲーム',
       metaDescription:
         'Nihongo Tango、草原彈磚物語、大漁祭、Pocket Commissions など Iraiya のアプリとゲーム。'
     },
@@ -74,7 +74,7 @@ export default {
       metaDescription: 'Iraiya Labs の AI-assisted tools、Web experiments、開発ワークフロー実験。'
     },
     blog: {
-      title: 'Writing & Build Notes',
+      title: '開発ノート',
       description: 'AI、フロントエンド、ゲーム開発、日本語学習、プロダクトノートへの入口。',
       metaTitle: 'Writing & Build Notes — Iraiya',
       metaDescription:
@@ -95,21 +95,21 @@ export default {
     }
   },
   blogTopics: {
-    blog: 'Blog',
-    ai: 'AI articles',
-    gameDev: 'Game development',
-    japanese: 'Japanese learning',
-    frontend: 'Frontend development'
+    blog: 'ブログ',
+    ai: 'AI記事',
+    gameDev: 'ゲーム開発',
+    japanese: '日本語学習',
+    frontend: 'フロントエンド開発'
   },
   contact: {
     email: 'Email',
-    futureEmail: 'Future brand email',
-    personalSite: 'Personal site',
-    blog: 'Blog',
+    futureEmail: 'ブランドメール予定',
+    personalSite: '個人サイト',
+    blog: 'ブログ',
     note: '第一版は既存メールを使用します。次のステップは hello@iraiya.com の有効化です。'
   },
   footer: {
     operatedBy: 'Operated by Yu Wei.',
-    personalSite: 'Personal site'
+    personalSite: '個人サイト'
   }
 } as const;

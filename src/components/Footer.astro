@@ -27,9 +27,9 @@ const t = getDictionary(locale);
 
 <style>
   .site-footer {
-    border-top: 1px solid rgba(148, 163, 184, 0.14);
+    border-top: 1px solid var(--line);
     padding: 32px 0;
-    color: #94a3b8;
+    color: var(--muted);
   }
 
   .footer-inner {
@@ -40,7 +40,7 @@ const t = getDictionary(locale);
   }
 
   .footer-brand {
-    color: #f8fafc;
+    color: var(--text);
     font-weight: 900;
   }
 
@@ -57,7 +57,7 @@ const t = getDictionary(locale);
   }
 
   .footer-links a:hover {
-    color: #f8fafc;
+    color: var(--text);
   }
 
   @media (max-width: 720px) {

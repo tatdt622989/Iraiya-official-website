@@ -9,59 +9,68 @@ interface Props {
 const { locale, path } = Astro.props;
 ---
 
-<div class="language-switcher" aria-label="Language">
-  {LOCALES.map((availableLocale) => (
-    <a
-      class:list={['language-link', availableLocale === locale && 'is-active']}
-      href={routeForLocale(availableLocale, path)}
-      aria-current={availableLocale === locale ? 'page' : undefined}
-    >
-      {localeLabels[availableLocale]}
-    </a>
-  ))}
-</div>
+<label class="language-switcher">
+  <span class="sr-only">Language</span>
+  <select aria-label="Language" data-language-select>
+    {LOCALES.map((availableLocale) => (
+      <option value={routeForLocale(availableLocale, path)} selected={availableLocale === locale}>
+        {localeLabels[availableLocale]}
+      </option>
+    ))}
+  </select>
+</label>
+
+<script is:inline>
+  document.querySelectorAll('[data-language-select]').forEach((select) => {
+    select.addEventListener('change', (event) => {
+      const value = event.currentTarget.value;
+      if (value) window.location.href = value;
+    });
+  });
+</script>
 
 <style>
   .language-switcher {
-    display: flex;
+    position: relative;
+    display: inline-flex;
     align-items: center;
-    gap: 6px;
-    flex-wrap: wrap;
-    justify-content: flex-end;
   }
 
-  .language-link {
-    display: inline-flex;
-    min-width: 38px;
-    min-height: 34px;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid rgba(148, 163, 184, 0.16);
+  .language-switcher::after {
+    position: absolute;
+    right: 11px;
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid #526263;
+    border-bottom: 2px solid #526263;
+    pointer-events: none;
+    content: '';
+    transform: translateY(-2px) rotate(45deg);
+  }
+
+  select {
+    min-width: 116px;
+    min-height: 40px;
+    appearance: none;
+    border: 1px solid rgba(23, 33, 38, 0.14);
     border-radius: 8px;
-    padding: 6px 9px;
-    color: #cbd5e1;
-    font-size: 0.78rem;
+    padding: 8px 32px 8px 12px;
+    background: rgba(255, 255, 255, 0.82);
+    color: #172126;
+    font: inherit;
+    font-size: 0.84rem;
     font-weight: 800;
   }
 
-  .language-link:hover,
-  .language-link.is-active {
-    border-color: rgba(34, 211, 238, 0.42);
-    color: #f8fafc;
-    background: rgba(34, 211, 238, 0.1);
+  select:hover {
+    border-color: rgba(0, 143, 163, 0.36);
   }
 
   @media (max-width: 420px) {
-    .language-switcher {
-      max-width: 164px;
-      gap: 4px;
-    }
-
-    .language-link {
-      min-width: 34px;
-      min-height: 32px;
-      padding: 5px 7px;
-      font-size: 0.72rem;
+    select {
+      min-width: 104px;
+      min-height: 38px;
+      font-size: 0.8rem;
     }
   }
 </style>

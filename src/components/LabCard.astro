@@ -33,12 +33,13 @@ const statusLabel = lab.linkStatus === 'detail-page-only' ? t.common.linkReview 
     min-height: 100%;
     flex-direction: column;
     gap: 16px;
-    border: 1px solid rgba(148, 163, 184, 0.17);
+    border: 1px solid var(--line);
     border-radius: 8px;
     padding: 22px;
     background:
-      linear-gradient(180deg, rgba(20, 32, 51, 0.88), rgba(16, 24, 39, 0.82)),
-      repeating-linear-gradient(90deg, rgba(148, 163, 184, 0.05) 0 1px, transparent 1px 18px);
+      linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(250, 248, 241, 0.82)),
+      repeating-linear-gradient(90deg, rgba(0, 143, 163, 0.045) 0 1px, transparent 1px 18px);
+    box-shadow: 0 16px 40px rgba(22, 34, 34, 0.08);
   }
 
   .lab-head {
@@ -49,7 +50,7 @@ const statusLabel = lab.linkStatus === 'detail-page-only' ? t.common.linkReview 
   }
 
   .lab-status {
-    color: #94a3b8;
+    color: var(--muted);
     font-size: 0.82rem;
     font-weight: 800;
   }
@@ -61,7 +62,7 @@ const statusLabel = lab.linkStatus === 'detail-page-only' ? t.common.linkReview 
 
   p {
     margin: 0;
-    color: #a8b4c4;
+    color: var(--muted);
     line-height: 1.7;
   }
 
