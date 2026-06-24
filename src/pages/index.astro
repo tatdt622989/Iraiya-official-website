@@ -1,19 +1,110 @@
 ---
-import { DEFAULT_LOCALE, routeForLocale } from '../i18n/config';
+import BlogSection from '../components/BlogSection.astro';
+import CTASection from '../components/CTASection.astro';
+import Hero from '../components/Hero.astro';
+import LabCard from '../components/LabCard.astro';
+import ProductCard from '../components/ProductCard.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import { labs } from '../data/labs';
+import { products } from '../data/products';
+import { services } from '../data/services';
+import { getDictionary } from '../i18n';
+import { DEFAULT_LOCALE } from '../i18n/config';
+import BaseLayout from '../layouts/BaseLayout.astro';
 
-const target = routeForLocale(DEFAULT_LOCALE, '/');
+const locale = DEFAULT_LOCALE;
+const t = getDictionary(locale);
+const featuredProducts = products.filter((product) => product.isFeatured);
+const comingProducts = products.filter((product) => product.status === 'coming-soon' || product.status === 'in-development');
 ---
 
-<!doctype html>
-<html lang="zh-Hant-TW">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="refresh" content={`0;url=${target}`} />
-    <link rel="canonical" href={target} />
-    <title>Iraiya</title>
-  </head>
-  <body>
-    <a href={target}>Iraiya</a>
-  </body>
-</html>
+<BaseLayout locale={locale} path="/" title={t.home.metaTitle} description={t.home.metaDescription}>
+  <Hero locale={locale} />
+
+  <section class="section">
+    <div class="site-shell">
+      <div class="section-head">
+        <h2 class="section-title">{t.home.featuredTitle}</h2>
+        <p class="section-description">{t.home.featuredDescription}</p>
+      </div>
+      <div class="grid grid-4">
+        {featuredProducts.map((product) => <ProductCard product={product} locale={locale} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section split-band">
+    <div class="site-shell">
+      <div class="section-head">
+        <h2 class="section-title">{t.home.comingTitle}</h2>
+      </div>
+      <div class="grid grid-2">
+        {comingProducts.map((product) => <ProductCard product={product} locale={locale} detailed />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="site-shell">
+      <div class="section-head">
+        <h2 class="section-title">{t.home.labsTitle}</h2>
+        <p class="section-description">{t.home.labsDescription}</p>
+      </div>
+      <div class="grid grid-4">
+        {labs.map((lab) => <LabCard lab={lab} locale={locale} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section split-band">
+    <div class="site-shell">
+      <div class="section-head">
+        <h2 class="section-title">{t.home.writingTitle}</h2>
+        <p class="section-description">{t.home.writingDescription}</p>
+      </div>
+      <BlogSection locale={locale} />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="site-shell">
+      <div class="section-head">
+        <h2 class="section-title">{t.home.servicesTitle}</h2>
+        <p class="section-description">{t.home.servicesDescription}</p>
+      </div>
+      <div class="grid grid-3">
+        {services.map((service) => <ServiceCard service={service} locale={locale} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight split-band">
+    <div class="site-shell philosophy">
+      <h2>{t.home.philosophyTitle}</h2>
+      <p>{t.home.philosophyText}</p>
+    </div>
+  </section>
+
+  <CTASection locale={locale} />
+</BaseLayout>
+
+<style>
+  .philosophy {
+    display: grid;
+    max-width: 900px;
+    gap: 14px;
+  }
+
+  .philosophy h2 {
+    margin: 0;
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    line-height: 1.05;
+  }
+
+  .philosophy p {
+    margin: 0;
+    color: #cbd5e1;
+    font-size: 1.08rem;
+    line-height: 1.75;
+  }
+</style>
