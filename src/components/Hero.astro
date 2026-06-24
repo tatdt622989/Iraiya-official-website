@@ -1,4 +1,5 @@
 ---
+import { products } from '../data/products';
 import { routeForLocale, type Locale } from '../i18n/config';
 import { getDictionary } from '../i18n';
 
@@ -8,12 +9,14 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = getDictionary(locale);
+const heroProducts = products.slice(0, 4);
 ---
 
 <section class="hero">
-  <div class="site-shell hero-grid">
+  <img class="hero-image" src="/assets/hero-iraiya-night-festival.png" alt="" fetchpriority="high" decoding="async" />
+  <div class="hero-shade" aria-hidden="true"></div>
+  <div class="site-shell hero-inner">
     <div class="hero-copy">
-      <p class="hero-kicker">{t.brand.display}</p>
       <h1>{t.hero.title}</h1>
       <p class="hero-headline">{t.hero.headline}</p>
       <p class="hero-subtitle">{t.hero.subtitle}</p>
@@ -22,111 +25,178 @@ const t = getDictionary(locale);
         <a class="button" href={routeForLocale(locale, '/labs')}>{t.common.exploreLabs}</a>
       </div>
     </div>
-    <div class="hero-visual">
-      <img
-        src="/assets/hero-iraiya-studio.png"
-        alt=""
-        fetchpriority="high"
-        decoding="async"
-      />
-    </div>
+    <nav class="hero-products" aria-label={t.home.featuredTitle}>
+      {heroProducts.map((product) => (
+        <a
+          class:list={['hero-product', `hero-product-${product.accent}`]}
+          href={product.url ?? routeForLocale(locale, '/apps')}
+        >
+          <span>{t.status[product.status]}</span>
+          <strong>{product.names[locale]}</strong>
+        </a>
+      ))}
+    </nav>
   </div>
 </section>
 
 <style>
   .hero {
-    padding: clamp(42px, 7vh, 70px) 0 clamp(58px, 8vh, 84px);
-    background:
-      linear-gradient(90deg, rgba(0, 143, 163, 0.12), transparent 48%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(244, 247, 241, 0.1));
+    position: relative;
+    display: grid;
+    min-height: min(820px, calc(100svh - 72px));
+    align-items: stretch;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+    background: #06111f;
   }
 
-  .hero-grid {
+  .hero-image,
+  .hero-shade {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 56% center;
+  }
+
+  .hero-shade {
+    background:
+      linear-gradient(90deg, rgba(4, 12, 23, 0.98) 0%, rgba(4, 12, 23, 0.92) 27%, rgba(4, 12, 23, 0.52) 53%, rgba(4, 12, 23, 0.16) 100%),
+      linear-gradient(180deg, rgba(4, 12, 23, 0.18) 0%, rgba(4, 12, 23, 0.1) 58%, rgba(4, 12, 23, 0.92) 100%),
+      radial-gradient(circle at 72% 48%, rgba(34, 211, 238, 0.12), transparent 34%);
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 1;
     display: grid;
-    min-height: min(640px, calc(100svh - 120px));
-    grid-template-columns: minmax(0, 0.94fr) minmax(380px, 1.06fr);
-    align-items: center;
-    gap: clamp(28px, 5vw, 58px);
+    min-height: inherit;
+    grid-template-rows: 1fr auto;
+    gap: 44px;
+    padding: clamp(72px, 11vh, 118px) 0 30px;
   }
 
   .hero-copy {
-    max-width: 680px;
-  }
-
-  .hero-kicker {
-    width: fit-content;
-    margin: 0 0 16px;
-    border: 1px solid rgba(0, 143, 163, 0.22);
-    border-radius: 999px;
-    padding: 7px 12px;
-    background: rgba(255, 255, 255, 0.74);
-    color: #007b8d;
-    font-size: 0.88rem;
-    font-weight: 900;
+    align-self: center;
+    max-width: 650px;
   }
 
   .hero-copy h1 {
     margin: 0;
-    max-width: 620px;
-    font-size: clamp(3rem, 8vw, 6.4rem);
-    line-height: 0.96;
-    color: #172126;
+    max-width: 640px;
+    color: #f8fafc;
+    font-size: clamp(4.4rem, 10vw, 8.4rem);
+    line-height: 0.9;
+    text-wrap: balance;
   }
 
   .hero-headline {
-    margin: 22px 0 0;
-    color: #172126;
+    max-width: 620px;
+    margin: 28px 0 0;
+    color: #f8fafc;
     font-size: clamp(1.3rem, 2.6vw, 2.05rem);
     font-weight: 800;
-    line-height: 1.2;
+    line-height: 1.18;
+    text-shadow: 0 2px 26px rgba(0, 0, 0, 0.55);
   }
 
   .hero-subtitle {
-    max-width: 650px;
+    max-width: 600px;
     margin: 18px 0 30px;
-    color: var(--muted);
+    color: #b9c6d2;
     font-size: clamp(1rem, 2vw, 1.18rem);
     line-height: 1.72;
   }
 
-  .hero-visual {
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
-    border: 1px solid rgba(23, 33, 38, 0.1);
-    aspect-ratio: 1.12 / 1;
-    background: #e5efe9;
-    box-shadow: 0 28px 80px rgba(17, 37, 40, 0.18);
+  .hero-products {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
   }
 
-  .hero-visual img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  .hero-product {
+    display: grid;
+    gap: 8px;
+    min-height: 92px;
+    align-content: end;
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    border-radius: 8px;
+    padding: 14px;
+    background: rgba(7, 17, 31, 0.58);
+    box-shadow: inset 0 1px 0 rgba(248, 250, 252, 0.06);
+    backdrop-filter: blur(14px);
+  }
+
+  .hero-product span {
+    color: #94a3b8;
+    font-size: 0.74rem;
+    font-weight: 900;
+  }
+
+  .hero-product strong {
+    color: #f8fafc;
+    font-size: clamp(0.98rem, 1.4vw, 1.16rem);
+    line-height: 1.18;
+  }
+
+  .hero-product-green {
+    border-color: rgba(52, 211, 153, 0.26);
+  }
+
+  .hero-product-cyan {
+    border-color: rgba(34, 211, 238, 0.26);
+  }
+
+  .hero-product-gold {
+    border-color: rgba(251, 191, 36, 0.28);
+  }
+
+  .hero-product-violet {
+    border-color: rgba(139, 92, 246, 0.28);
   }
 
   @media (max-width: 900px) {
-    .hero-grid {
-      grid-template-columns: 1fr;
+    .hero {
+      min-height: auto;
     }
 
-    .hero-visual {
-      max-height: 520px;
+    .hero-image {
+      object-position: 66% center;
+    }
+
+    .hero-shade {
+      background:
+        linear-gradient(180deg, rgba(4, 12, 23, 0.95) 0%, rgba(4, 12, 23, 0.72) 44%, rgba(4, 12, 23, 0.95) 100%),
+        linear-gradient(90deg, rgba(4, 12, 23, 0.84), rgba(4, 12, 23, 0.2));
+    }
+
+    .hero-inner {
+      min-height: 760px;
+      padding-top: 54px;
+    }
+
+    .hero-products {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
   @media (max-width: 600px) {
-    .hero {
-      padding: 34px 0 40px;
+    .hero-inner {
+      min-height: 720px;
+      gap: 30px;
+      padding-bottom: 18px;
     }
 
-    .hero-grid {
-      gap: 26px;
-      min-height: auto;
+    .hero-image {
+      object-position: 72% center;
     }
 
     .hero-copy h1 {
-      font-size: clamp(2.8rem, 13vw, 3.4rem);
+      font-size: clamp(3.2rem, 17vw, 4.6rem);
     }
 
     .hero-headline {
@@ -138,8 +208,9 @@ const t = getDictionary(locale);
       line-height: 1.62;
     }
 
-    .hero-visual {
-      aspect-ratio: 4 / 3;
+    .hero-product {
+      min-height: 76px;
+      padding: 12px;
     }
   }
 </style>

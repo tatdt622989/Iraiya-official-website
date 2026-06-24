@@ -33,7 +33,7 @@ const comingProducts = products.filter((product) => product.status === 'coming-s
         <h2 class="section-title">{t.home.featuredTitle}</h2>
         <p class="section-description">{t.home.featuredDescription}</p>
       </div>
-      <div class="grid grid-4">
+      <div class="grid grid-2 product-showcase">
         {featuredProducts.map((product) => <ProductCard product={product} locale={locale} />)}
       </div>
     </div>
@@ -44,7 +44,7 @@ const comingProducts = products.filter((product) => product.status === 'coming-s
       <div class="section-head">
         <h2 class="section-title">{t.home.comingTitle}</h2>
       </div>
-      <div class="grid grid-2">
+      <div class="grid coming-list">
         {comingProducts.map((product) => <ProductCard product={product} locale={locale} detailed />)}
       </div>
     </div>
@@ -87,6 +87,14 @@ const comingProducts = products.filter((product) => product.status === 'coming-s
     display: grid;
     max-width: 900px;
     gap: 14px;
+  }
+
+  .product-showcase {
+    gap: 20px;
+  }
+
+  .coming-list {
+    gap: 18px;
   }
 
   .philosophy h2 {
