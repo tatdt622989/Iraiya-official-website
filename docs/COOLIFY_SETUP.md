@@ -23,6 +23,8 @@ Required GitHub repository secrets:
 - `COOLIFY_DEPLOY_URL`: Coolify API deploy URL in the format `https://<coolify-domain>/api/v1/deploy?uuid=<resource-uuid>`.
 - `COOLIFY_API_TOKEN`: Coolify API token with `deploy` permission. The workflow sends it as `Authorization: Bearer <token>`.
 
+Do not use the older `COOLIFY_DEPLOY_WEBHOOK` or `COOLIFY_DEPLOY_WEBHOOK_SECRET` names. The workflow intentionally uses only the explicit API deploy names above.
+
 Do not use the Coolify GitHub manual webhook URL for this deployment flow. URLs like `/source/github/events/manual` expect GitHub webhook headers and payloads and will respond with `Nothing to do. Event '' is not supported.` from a plain `curl`. This project uses GitHub Actions to build the image, then calls the Coolify API deploy endpoint after the image is already published.
 
 The workflow publishes:

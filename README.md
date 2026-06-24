@@ -56,6 +56,7 @@ GitHub owns build; Coolify owns runtime deploy:
 - GitHub Actions builds and pushes the image to GHCR.
 - Coolify deploys from the pre-built image `ghcr.io/tatdt622989/iraiya-official-website:main`.
 - The GitHub secrets `COOLIFY_DEPLOY_URL` and `COOLIFY_API_TOKEN` trigger Coolify after image publish.
+- Older `COOLIFY_DEPLOY_WEBHOOK` and `COOLIFY_DEPLOY_WEBHOOK_SECRET` names are not used.
 
 If you want CI to be a hard gate before production deploys, protect `main` and require the GitHub CI check before merging.
 

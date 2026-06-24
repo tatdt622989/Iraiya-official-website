@@ -71,8 +71,8 @@ jobs:
       - name: Trigger Coolify image redeploy
         if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
         env:
-          COOLIFY_DEPLOY_URL: ${{ secrets.COOLIFY_DEPLOY_URL || secrets.COOLIFY_DEPLOY_WEBHOOK }}
-          COOLIFY_API_TOKEN: ${{ secrets.COOLIFY_API_TOKEN || secrets.COOLIFY_DEPLOY_WEBHOOK_SECRET }}
+          COOLIFY_DEPLOY_URL: ${{ secrets.COOLIFY_DEPLOY_URL }}
+          COOLIFY_API_TOKEN: ${{ secrets.COOLIFY_API_TOKEN }}
         run: |
           if [ -z "$COOLIFY_DEPLOY_URL" ]; then
             echo "COOLIFY_DEPLOY_URL secret is not set."
