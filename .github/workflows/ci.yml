@@ -72,10 +72,18 @@ jobs:
         if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
         env:
           COOLIFY_DEPLOY_WEBHOOK: ${{ secrets.COOLIFY_DEPLOY_WEBHOOK }}
+          COOLIFY_DEPLOY_WEBHOOK_SECRET: ${{ secrets.COOLIFY_DEPLOY_WEBHOOK_SECRET }}
         run: |
           if [ -z "$COOLIFY_DEPLOY_WEBHOOK" ]; then
             echo "COOLIFY_DEPLOY_WEBHOOK secret is not set."
             exit 1
           fi
+          if [ -z "$COOLIFY_DEPLOY_WEBHOOK_SECRET" ]; then
+            echo "COOLIFY_DEPLOY_WEBHOOK_SECRET secret is not set."
+            exit 1
+          fi
 
-          curl --fail --silent --show-error --request POST "$COOLIFY_DEPLOY_WEBHOOK"
+          curl --fail --silent --show-error \
+            --request POST \
+            --header "Authorization: Bearer $COOLIFY_DEPLOY_WEBHOOK_SECRET" \
+            "$COOLIFY_DEPLOY_WEBHOOK"

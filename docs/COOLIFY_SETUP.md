@@ -18,11 +18,12 @@ GitHub Actions does the build work:
 - Push to `main`: same checks, then push the image to GitHub Container Registry and trigger Coolify to redeploy.
 - Manual workflow dispatch from `main`: same publish and Coolify redeploy path, useful after changing repository secrets.
 
-Required GitHub repository secret:
+Required GitHub repository secrets:
 
 - `COOLIFY_DEPLOY_WEBHOOK`: Coolify deploy webhook URL for the Docker Image resource.
+- `COOLIFY_DEPLOY_WEBHOOK_SECRET`: Coolify deploy webhook secret or API token. The workflow sends it as `Authorization: Bearer <secret>`.
 
-Do not create a GitHub repository webhook with a Payload URL for this deployment flow. Coolify's Git webhook Payload URL and webhook secret are for Git-based deployments where Coolify pulls source code and builds on the server. This project uses GitHub Actions to build the image, then calls the Coolify deploy webhook after the image is already published.
+Do not create a GitHub repository webhook with a Payload URL for this deployment flow. This project uses GitHub Actions to build the image, then calls the Coolify deploy webhook after the image is already published.
 
 The workflow publishes:
 
@@ -44,6 +45,7 @@ Recommended settings:
 - Environment Variables: none for the first version
 - Auto Deploy from Git repository: not needed for this resource
 - Deploy webhook: create/copy the Coolify deploy webhook URL and save it as GitHub secret `COOLIFY_DEPLOY_WEBHOOK`
+- Deploy webhook secret: copy the matching Coolify secret/token and save it as GitHub secret `COOLIFY_DEPLOY_WEBHOOK_SECRET`
 
 If the GHCR package is private, add registry credentials in Coolify so the server can pull the image. Use a GitHub token with package read permission. If the GHCR package is public, registry credentials are not needed.
 

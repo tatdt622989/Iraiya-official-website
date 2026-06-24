@@ -9,5 +9,7 @@ describe('deployment workflow', () => {
     expect(workflow).toContain(
       "if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')"
     );
+    expect(workflow).toContain('COOLIFY_DEPLOY_WEBHOOK_SECRET: ${{ secrets.COOLIFY_DEPLOY_WEBHOOK_SECRET }}');
+    expect(workflow).toContain('--header "Authorization: Bearer $COOLIFY_DEPLOY_WEBHOOK_SECRET"');
   });
 });
