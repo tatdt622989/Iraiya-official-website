@@ -3,7 +3,7 @@ import { LOCALES, routeForLocale } from '../i18n/config';
 export const prerender = true;
 
 const site = 'https://iraiya.com';
-const pagePaths = ['/', '/apps', '/labs', '/blog', '/services', '/contact'];
+const pagePaths = ['/', '/apps', '/labs', '/blog', '/contact'];
 
 export function GET() {
   const urls = LOCALES.flatMap((locale) =>

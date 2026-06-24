@@ -4,10 +4,8 @@ import CTASection from '../components/CTASection.astro';
 import Hero from '../components/Hero.astro';
 import LabCard from '../components/LabCard.astro';
 import ProductCard from '../components/ProductCard.astro';
-import ServiceCard from '../components/ServiceCard.astro';
 import { labs } from '../data/labs';
 import { products } from '../data/products';
-import { services } from '../data/services';
 import { getDictionary } from '../i18n';
 import { DEFAULT_LOCALE } from '../i18n/config';
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -63,18 +61,6 @@ const comingProducts = products.filter((product) => product.status === 'coming-s
         <p class="section-description">{t.home.writingDescription}</p>
       </div>
       <BlogSection locale={locale} />
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="site-shell">
-      <div class="section-head">
-        <h2 class="section-title">{t.home.servicesTitle}</h2>
-        <p class="section-description">{t.home.servicesDescription}</p>
-      </div>
-      <div class="grid grid-3">
-        {services.map((service) => <ServiceCard service={service} locale={locale} />)}
-      </div>
     </div>
   </section>
 
