@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Cubic 11';
+  src:
+    url('/fonts/Cubic_11.woff2') format('woff2'),
+    url('/fonts/Cubic_11.woff') format('woff');
+  font-display: swap;
+  font-weight: 400;
+  font-style: normal;
+}
+
 :root {
   color-scheme: dark;
   --bg: #06111f;
@@ -39,10 +49,11 @@ body {
   background-size: 42px 42px, 42px 42px, auto, auto;
   color: var(--text);
   font-family:
-    Inter,
-    Geist,
+    'Cubic 11',
     'Noto Sans TC',
     'Noto Sans JP',
+    Inter,
+    Geist,
     system-ui,
     sans-serif;
 }

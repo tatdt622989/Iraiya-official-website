@@ -10,6 +10,7 @@ interface Props {
 const { locale } = Astro.props;
 const t = getDictionary(locale);
 const heroProducts = products.slice(0, 4);
+const localBrandName = locale === 'en' ? null : t.brand.display.replace(' Iraiya', '');
 ---
 
 <section class="hero">
@@ -17,7 +18,10 @@ const heroProducts = products.slice(0, 4);
   <div class="hero-shade" aria-hidden="true"></div>
   <div class="site-shell hero-inner">
     <div class="hero-copy">
-      <h1>{t.hero.title}</h1>
+      <h1>
+        {localBrandName && <span class="brand-local">{localBrandName}</span>}
+        <span class="brand-latin">Iraiya</span>
+      </h1>
       <p class="hero-headline">{t.hero.headline}</p>
       <p class="hero-subtitle">{t.hero.subtitle}</p>
       <div class="button-row">
@@ -89,9 +93,24 @@ const heroProducts = products.slice(0, 4);
     margin: 0;
     max-width: 640px;
     color: #f8fafc;
-    font-size: clamp(4.4rem, 10vw, 8.4rem);
-    line-height: 0.9;
-    text-wrap: balance;
+    line-height: 0.88;
+  }
+
+  .brand-local,
+  .brand-latin {
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    white-space: nowrap;
+  }
+
+  .brand-local {
+    font-size: clamp(4.8rem, 9vw, 8rem);
+  }
+
+  .brand-latin {
+    margin-top: 8px;
+    font-size: clamp(4.3rem, 8vw, 7.2rem);
   }
 
   .hero-headline {
@@ -196,7 +215,15 @@ const heroProducts = products.slice(0, 4);
     }
 
     .hero-copy h1 {
-      font-size: clamp(3.2rem, 17vw, 4.6rem);
+      max-width: 100%;
+    }
+
+    .brand-local {
+      font-size: clamp(3.4rem, 16vw, 4.6rem);
+    }
+
+    .brand-latin {
+      font-size: clamp(3rem, 15vw, 4.2rem);
     }
 
     .hero-headline {
