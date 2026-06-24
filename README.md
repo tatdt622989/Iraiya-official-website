@@ -47,6 +47,8 @@ GitHub Actions runs CI for pull requests and publishes a container image on `mai
 - push `ghcr.io/tatdt622989/iraiya-official-website:main` on `main`
 - call Coolify deploy webhook after the image is pushed
 
+Manual `workflow_dispatch` runs from `main` also publish the image and call Coolify, so a deploy can be retried without creating an empty commit.
+
 ## Deployment Flow
 
 GitHub owns build; Coolify owns runtime deploy:

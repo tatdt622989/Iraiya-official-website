@@ -1,0 +1,13 @@
+import { readFileSync } from 'node:fs';
+import { describe, expect, it } from 'vitest';
+
+const workflow = readFileSync('.github/workflows/ci.yml', 'utf8');
+
+describe('deployment workflow', () => {
+  it('publishes and triggers Coolify for main pushes and manual dispatches', () => {
+    expect(workflow).toContain('workflow_dispatch:');
+    expect(workflow).toContain(
+      "if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')"
+    );
+  });
+});
