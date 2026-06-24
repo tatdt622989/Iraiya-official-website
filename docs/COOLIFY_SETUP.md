@@ -29,6 +29,7 @@ Do not use the Coolify GitHub manual webhook URL for this deployment flow. URLs 
 
 The workflow publishes:
 
+- `ghcr.io/tatdt622989/iraiya-official-website:latest`
 - `ghcr.io/tatdt622989/iraiya-official-website:main`
 - `ghcr.io/tatdt622989/iraiya-official-website:sha-<commit-sha>`
 
@@ -39,7 +40,7 @@ Create an application resource from a pre-built Docker image.
 Recommended settings:
 
 - Deployment type: Docker Image / Pre-built Image
-- Image: `ghcr.io/tatdt622989/iraiya-official-website:main`
+- Image: `ghcr.io/tatdt622989/iraiya-official-website:latest`
 - Port Exposes: `80`
 - Port Mappings: leave empty unless you explicitly need host port mapping
 - Domain: `https://iraiya.com`
@@ -56,7 +57,7 @@ If the GHCR package is private, add registry credentials in Coolify so the serve
 1. Open a PR.
 2. GitHub Actions runs CI: install, test, Astro build, Docker build.
 3. Merge to `main` after CI passes.
-4. GitHub Actions builds and pushes `ghcr.io/tatdt622989/iraiya-official-website:main`.
+4. GitHub Actions builds and pushes `ghcr.io/tatdt622989/iraiya-official-website:latest`.
 5. GitHub Actions calls the Coolify deploy webhook.
 6. Coolify pulls the updated pre-built image and recreates the container.
 

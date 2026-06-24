@@ -13,6 +13,8 @@ describe('deployment workflow', () => {
     expect(workflow).toContain('COOLIFY_API_TOKEN: ${{ secrets.COOLIFY_API_TOKEN }}');
     expect(workflow).not.toContain('COOLIFY_DEPLOY_WEBHOOK');
     expect(workflow).not.toContain('COOLIFY_DEPLOY_WEBHOOK_SECRET');
+    expect(workflow).toContain('docker tag "$IMAGE_NAME:ci-${{ github.sha }}" "$IMAGE_NAME:latest"');
+    expect(workflow).toContain('docker push "$IMAGE_NAME:latest"');
     expect(workflow).toContain('/api/v1/deploy?uuid=');
     expect(workflow).toContain('Manual Git webhook URLs cannot trigger pre-built image deployments.');
     expect(workflow).toContain('--header "Authorization: Bearer $COOLIFY_API_TOKEN"');

@@ -29,7 +29,7 @@ pnpm build
 Recommended setup when the Coolify host should not spend resources building images:
 
 - Deployment type: `Docker Image` / pre-built image
-- Image: `ghcr.io/tatdt622989/iraiya-official-website:main`
+- Image: `ghcr.io/tatdt622989/iraiya-official-website:latest`
 - Port: `80`
 - Domain: `iraiya.com`
 - Environment variables: none for the first version
@@ -44,7 +44,7 @@ GitHub Actions runs CI for pull requests and publishes a container image on `mai
 - `pnpm test`
 - `pnpm build`
 - `docker build`
-- push `ghcr.io/tatdt622989/iraiya-official-website:main` on `main`
+- push `ghcr.io/tatdt622989/iraiya-official-website:latest` and `:main` on `main`
 - call Coolify deploy webhook after the image is pushed
 
 Manual `workflow_dispatch` runs from `main` also publish the image and call Coolify, so a deploy can be retried without creating an empty commit.
@@ -54,7 +54,7 @@ Manual `workflow_dispatch` runs from `main` also publish the image and call Cool
 GitHub owns build; Coolify owns runtime deploy:
 
 - GitHub Actions builds and pushes the image to GHCR.
-- Coolify deploys from the pre-built image `ghcr.io/tatdt622989/iraiya-official-website:main`.
+- Coolify deploys from the pre-built image `ghcr.io/tatdt622989/iraiya-official-website:latest`.
 - The GitHub secrets `COOLIFY_DEPLOY_URL` and `COOLIFY_API_TOKEN` trigger Coolify after image publish.
 - Older `COOLIFY_DEPLOY_WEBHOOK` and `COOLIFY_DEPLOY_WEBHOOK_SECRET` names are not used.
 
